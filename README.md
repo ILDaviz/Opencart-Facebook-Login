@@ -24,5 +24,5 @@ To create and connect Facebook login with your API follow these simple steps:
 In case you need help or you got any idea how to improve this module even better then send us an e-mail.
 ----------------------------------------------
 Change log
-V39 -- Fix email no permission
-V38 -- Relase module
+- V39 -- Fix email no permission
+- V38 -- Relase module
