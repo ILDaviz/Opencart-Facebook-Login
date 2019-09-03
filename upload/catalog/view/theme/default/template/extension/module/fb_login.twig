@@ -1,0 +1,86 @@
+<div class="fb-login-error"></div>
+{% if status_fb_login %}
+{# Login Facebook #}
+<div id="fb-root"></div>
+<script>
+function statusChangeCallback(response) {
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
+            FB.api('/'+uid+'?fields=name,id,email,first_name,last_name', function(response) {
+                $.ajax({
+                    url: '{{ request }}',
+                    data : 'email='+response.email+'&fname='+response.first_name+'&lname='+response.last_name+'&fb_id='+response.id+'&login_via=facebook',
+                    type : 'get',
+                    success: function(json) {
+                        if (json['success']) {
+                            window.location.reload();
+                        } else if (json['error']) {
+                            for (i in json['error']) {
+                                $('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>').insertBefore($('div.fb-login-error'));
+                            }
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        } else if (response.status === 'not_authorized') {
+            console.log('not_authorized');
+        } else {
+            FB.login(function(response) {
+                FB.api('/me?fields=name,id,email,first_name,last_name', function(response) {
+                    $.ajax({
+                        url: '{{ request }}',
+                        data : 'email='+response.email+'&fname='+response.first_name+'&lname='+response.last_name+'&fb_id='+response.id+'&login_via=facebook',
+                        type : 'get',
+                        success: function(json) {
+                            if (json['success']) {
+                                window.location.reload();
+                            } else if (json['error']) {
+                                for (i in json['error']) {
+                                    $('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>').insertBefore($('div.fb-login-error'));
+                                }
+                            } else {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            }, {scope: 'email,user_likes'});
+        }
+    });
+}
+function loginuseronfacebook() {
+    FB.getLoginStatus(function(response) {
+    if (response.status == 'connected') {
+        statusChangeCallback(response);
+    }});
+}
+window.fbAsyncInit = function() {
+    FB.init({
+    appId      : '{{ app_id }}',
+    cookie     : true,
+    xfbml      : true,
+    version    : 'v3.2'
+    });
+    FB.AppEvents.logPageView();   
+};
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/{{ location_code }}/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<hr>
+<div class="col-sm-12">
+    <div class="well">
+    <h2>{{ text_facebook }}</h2>
+    <p>{{ text_info_login }}</p>
+    <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="loginuseronfacebook();" data-scope="email,public_profile"></div>
+    </div>
+</div>
+{% endif %}
