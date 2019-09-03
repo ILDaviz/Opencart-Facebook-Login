@@ -97,8 +97,13 @@ class ControllerExtensionModuleFbLogin extends Controller {
 		return !$this->error;
 	}
 
-	public function logout(){
-		$data = array();
-		echo $this->load->view('extension/module/fb_logout', $data);
-	}
+	// public function install(){
+	// 	$this->load->model('setting/event');
+	// 	$this->model_setting_event->addEvent('logoutfacebook', 'catalog/controller/account/logout/after','extension/module/fb_login/logout');
+	// }
+
+	// public function uninstall() {
+	// 	$this->load->model('setting/event');
+	// 	$this->model_setting_event->deleteEventByCode('logoutfacebook');
+	// }
 }
