@@ -4,59 +4,72 @@
 <div id="fb-root"></div>
 <script>
 function statusChangeCallback(response) {
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-            FB.api('/'+uid+'?fields=name,id,email,first_name,last_name', function(response) {
-                $.ajax({
+    if (response.status === 'connected') {
+        FB.api('/me?fields=name,id,email,first_name,last_name', function(response) {
+            var email = '';
+            if($('#email_input_request').is(':visible') === true ){
+                email = $("#input-login-email").val();
+            } else {
+                email = response.email;
+            }
+            $.ajax({
                     url: '{{ request }}',
-                    data : 'email='+response.email+'&fname='+response.first_name+'&lname='+response.last_name+'&fb_id='+response.id+'&login_via=facebook',
+                    data : 'email='+email+'&fname='+response.first_name+'&lname='+response.last_name+'&fb_id='+response.id+'&login_via=facebook',
                     type : 'get',
                     success: function(json) {
                         if (json['success']) {
-                            FB.logout(function(response) {
-                                console.log(response);
-                            });
+                            FB.logout(function(response){});
                             window.location.reload();
                         } else if (json['error']) {
+                            $("#email_input_request").show();
                             for (i in json['error']) {
                                 $('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>').insertBefore($('div.fb-login-error'));
                             }
                         } else {
+                            FB.logout(function(response){});
                             window.location.reload();
                         }
                     }
-                });
             });
-        } else if (response.status === 'not_authorized') {
-            console.log('not_authorized');
-        } else {
-            FB.login(function(response) {
+        });
+    } else if (response.status === 'not_authorized') {
+        console.log('not_authorized');
+    } else {
+        FB.login(function(response) {
+            if (response.authResponse) {
                 FB.api('/me?fields=name,id,email,first_name,last_name', function(response) {
+                    var email = '';
+                    if($('#email_input_request').is(':visible') === true ){
+                        email = $("#input-login-email").val();
+                    } else {
+                        email = response.email;
+                    }
                     $.ajax({
                         url: '{{ request }}',
-                        data : 'email='+response.email+'&fname='+response.first_name+'&lname='+response.last_name+'&fb_id='+response.id+'&login_via=facebook',
+                        data : 'email='+email+'&fname='+response.first_name+'&lname='+response.last_name+'&fb_id='+response.id+'&login_via=facebook',
                         type : 'get',
                         success: function(json) {
                             if (json['success']) {
-                                FB.logout(function(response) {
-                                    console.log(response);
-                                });
+                                FB.logout(function(response){});
                                 window.location.reload();
                             } else if (json['error']) {
+                                $("#email_input_request").show();
                                 for (i in json['error']) {
                                     $('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>').insertBefore($('div.fb-login-error'));
                                 }
                             } else {
+                                FB.logout(function(response){});
                                 window.location.reload();
                             }
                         }
                     });
                 });
-            }, {scope: 'email,user_likes'});
-        }
-    });
+            } else {
+               console.log('error_login_fb'); 
+               FB.logout(function(response){});
+            }
+        }, {scope: 'email'});
+    }
 }
 function loginuseronfacebook() {
     FB.getLoginStatus(function(response) {
@@ -68,8 +81,8 @@ window.fbAsyncInit = function() {
     FB.init({
     appId      : '{{ app_id }}',
     cookie     : true,
-    status     : true,
     xfbml      : true,
+    status     : true,
     version    : 'v3.2'
     });
     FB.AppEvents.logPageView();   
@@ -87,7 +100,12 @@ window.fbAsyncInit = function() {
     <div class="well">
     <h2>{{ text_facebook }}</h2>
     <p>{{ text_info_login }}</p>
+    <div class="form-group required" id='email_input_request' style="display: none;">
+        <label class="control-label" for="input-login-email">{{ entry_email }}</label>
+        <input type="email" name="email" value="" placeholder="{{ entry_email_txt }}" id="input-login-email" class="form-control" />
+    </div>
     <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="loginuseronfacebook();" data-scope="email,public_profile"></div>
+    <p><small>{{ login_info_popup }}</small></p>
     </div>
 </div>
 {% endif %}

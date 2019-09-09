@@ -21,11 +21,15 @@ class ControllerExtensionModuleFbLogin extends Controller {
         $data = array();
 
         if (!isset($this->request->get['email'])) {
-			$json['error'][] = $this->language->get('error_email');
+			$json['error'][] = $this->language->get('error_email_not_present');
         }
 
         if ($this->request->get['email'] == 'undefined') {
 			$json['error'][] = $this->language->get('error_email_noset');
+        }
+
+        if (!filter_var($this->request->get['email'], FILTER_VALIDATE_EMAIL)) {
+			$json['error'][] = $this->language->get('error_email');
         }
 
         if (!isset($this->request->get['fname'])) {
