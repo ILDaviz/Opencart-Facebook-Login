@@ -25,6 +25,7 @@ In case you need help or you got any idea how to improve this module even better
 In develope now:
 - New system comunication core async
 - Add module for insert on layout
+- Add Button logout facebook
 ----------------------------------------------
 Change log
 - V41 -- Dev -> Add new sys core for connect to facebook
