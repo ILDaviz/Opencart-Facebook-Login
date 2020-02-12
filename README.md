@@ -22,8 +22,12 @@ To create and connect Facebook login with your API follow these simple steps:
 
 ----------------------------------------------
 In case you need help or you got any idea how to improve this module even better then send us an e-mail.
+In develope now:
+- New system comunication core async
+- Add module for insert on layout
 ----------------------------------------------
 Change log
+- V41 -- Dev -> Add new sys core for connect to facebook
 - V40 -- Added email block input if facebook profile it's not connected with email or connected with telephone number or privacy settings blocks email api. Add note for enable pop-up.
 - V39 -- Fix email no permission
 - V38 -- Relase module
