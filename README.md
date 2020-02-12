@@ -34,6 +34,6 @@ In develope now:
 ---
 Change log
 - V41 -- Dev -> Add new sys core for connect to facebook
-- V40 -- Added email block input if facebook profile it's not connected with email or connected with telephone number or privacy settings blocks email api. Add note for enable pop-up.
+- V40 -- (Stable) Added email block input if facebook profile it's not connected with email or connected with telephone number or privacy settings blocks email api. Add note for enable pop-up.
 - V39 -- Fix email no permission
 - V38 -- Relase module
