@@ -21,7 +21,7 @@ To create and connect Facebook login with your API follow these simple steps:
 5. Connect your facebook login button with the layout.
 
 ----------------------------------------------
-In case you need help or you got any idea how to improve this module even better then send us an e-mail.
+In case you need help or you got any idea how to improve this module pls add pull request.
 In develope now:
 - New system comunication core async
 - Add module for insert on layout
