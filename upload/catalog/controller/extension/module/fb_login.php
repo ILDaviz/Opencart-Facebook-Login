@@ -11,6 +11,8 @@ class ControllerExtensionModuleFbLogin extends Controller {
         return $this->load->view('extension/module/fb_login', $data);
     }
 
+    public function 
+
     public function fblogin(){
 
         $this->load->language('extension/module/fb_login');
