@@ -1,4 +1,5 @@
-## Opencart Facebook Login 3.x
+Opencart Facebook Login 3.x
+---------------------------------
 Description:
 Let your customers login and checkout using Facebook account. This module uses your own created Facebook API for your own website. In case, you don't have website API for Facebook yet, then below you can find instructions how to register your own API.
 ---------------------------------
