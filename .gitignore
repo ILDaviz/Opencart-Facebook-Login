@@ -11,6 +11,7 @@ system/cache/
 system/logs/
 
 system/storage/
+devfolder
 
 # vQmod log files
 vqmod/logs/*
