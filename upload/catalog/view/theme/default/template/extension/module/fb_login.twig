@@ -1,7 +1,4 @@
-<div class="fb-login-error"></div>
 {% if status_fb_login %}
-{# Login Facebook #}
-<div id="fb-root"></div>
 <script>
 function statusChangeCallback(response) {
     if (response.status === 'connected') {
@@ -65,8 +62,8 @@ function statusChangeCallback(response) {
                     });
                 });
             } else {
-               console.log('error_login_fb'); 
-               FB.logout(function(response){});
+                console.log('error_login_fb'); 
+                FB.logout(function(response){});
             }
         }, {scope: 'email'});
     }
@@ -83,7 +80,7 @@ window.fbAsyncInit = function() {
     cookie     : true,
     xfbml      : true,
     status     : true,
-    version    : 'v3.2'
+    version    : 'v6.0'
     });
     FB.AppEvents.logPageView();   
 };
@@ -95,17 +92,5 @@ window.fbAsyncInit = function() {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-<hr>
-<div class="col-sm-12">
-    <div class="well">
-    <h2>{{ text_facebook }}</h2>
-    <p>{{ text_info_login }}</p>
-    <div class="form-group required" id='email_input_request' style="display: none;">
-        <label class="control-label" for="input-login-email">{{ entry_email }}</label>
-        <input type="email" name="email" value="" placeholder="{{ entry_email_txt }}" id="input-login-email" class="form-control" />
-    </div>
-    <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="loginuseronfacebook();" data-scope="email,public_profile"></div>
-    <p><small>{{ login_info_popup }}</small></p>
-    </div>
-</div>
+<div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="loginuseronfacebook();" data-scope="email,public_profile"></div>
 {% endif %}
