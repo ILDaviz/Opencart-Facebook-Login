@@ -12,32 +12,14 @@
 			]]></add>
 		</operation>
 	</file>
-	<file path="catalog/controller/account/register.php">
-		<operation>
-			<search index="0"><![CDATA[$this->response->setOutput($this->load->view('account/register', $data));]]></search>
-			<add position="before"><![CDATA[
-            $data['fb_login'] = $this->load->controller('extension/module/fb_login');
-			]]></add>
-		</operation>
-	</file>
     <file path="catalog/view/theme/*/template/account/login.twig">
 		<operation>
-			<search index="0"><![CDATA[<div class="row">]]></search>
+			<search index="0"><![CDATA[<input type="submit" value="{{ button_login }}" class="btn btn-primary" />]]></search>
 			<add position="after"><![CDATA[
             {{ fb_login }}
 			]]></add>
 		</operation>
 	</file>
-
-	<file path="catalog/view/theme/*/template/account/register.twig">
-		<operation>
-			<search index="0"><![CDATA[<div class="row">]]></search>
-			<add position="before"><![CDATA[
-            {{ fb_login }}
-			]]></add>
-		</operation>
-	</file>
-
 	<file path="catalog/controller/checkout/login.php">
 		<operation>
 			<search index="0"><![CDATA[$this->response->setOutput($this->load->view('checkout/login', $data));]]></search>
@@ -48,7 +30,7 @@
 	</file>
 	<file path="catalog/view/theme/*/template/checkout/login.twig">
 		<operation>
-			<search index="6"><![CDATA[</div>]]></search>
+			<search index="0"><![CDATA[<input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />]]></search>
 			<add position="after"><![CDATA[
             {{ fb_login }}
 			]]></add>

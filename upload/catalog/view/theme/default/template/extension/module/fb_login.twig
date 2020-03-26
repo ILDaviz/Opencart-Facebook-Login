@@ -1,135 +1,115 @@
-<link rel="dns-prefetch" href="//connect.facebook.net" />
-<script type="test/javascript">
-window.FBL = {};
-function fbl_loginCheck() {
-    window.FB.getLoginStatus( function(response) {
-        FBL.handleResponse(response);
-    } );
-}
-FBL.handleResponse = function( response ) {
-    var button          =  $('.fbl-button'),
-        $form_obj       = button.parents('form') || false,
-        $redirect_to    = $form_obj.find('input[name="redirect_to"]').val() || button.data('redirect'),
-        running         = false;
-    /**
-    * If we get a successful authorization response we handle it
-    */
-    if (response.status == 'connected' && ! running) {
-        running = true;
-        var fb_response = response;
-        $('.fbl-spinner').fadeIn();
-        $('.fb-login-button').hide();
+{% if status_fb_login %}
+<script>
+function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+        FB.api('/me', { fields: 'id,email,name,first_name,last_name' } , function(response) {
+            if(!response.email){
+                var email = prompt("{{ insert_email }}", "{{ exemple_email }}");
+            } else {
+                email = response.email;
+            }
+            if(!response.first_name){
+                var first_name = prompt("{{ insert_email }}", "");
+            } else {
+                first_name = response.first_name;
+            }
+            if(!response.last_name){
+                var last_name = prompt("{{ insert_email }}", "");
+            } else {
+                last_name = response.last_name;
+            }
+            $.ajax({
+                url: '{{ request }}',
+                data : 'email='+email+'&fname='+first_name+'&lname='+last_name+'&fb_id='+response.id+'&login_via=facebook',
+                type : 'get',
+                success: function(json) {
+                    if (json['success']) {
+                        FB.logout();
+                        window.location.reload();
+                    } else if (json['error']) {
+                        for (i in json['error']) {
+                            $('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>').insertBefore($('div.fb-login-error'));
 
-        /**
-        * Send the obtained token to server side for extra checks and user data retrieval
-        */
-        $.ajax({
-            data: {
-                fb_response: fb_response,
-                security: button.data('fb_nonce')
-            },
-            global: false,
-            type: "POST",
-            url: {{ request }},
-            success: function (data) {
-                if (data && data.success) {
-                    if( data.redirect && data.redirect.length ) {
-                        location.href = data.redirect;
-                    } else if ( $redirect_to.length ) {
-                        location.href = $redirect_to;
+                        }
+                        FB.logout();
                     } else {
-                        location.href = fbl.site_url;
+                        FB.logout();
+                        window.location.reload();
                     }
-                } else if (data && data.error) {
-                    $('.fbl-spinner').hide();
-                    $('.fb-login-button').show();
-
-                    if ($form_obj.length) {
-                        $form_obj.append('<p class="fbl_error">' + data.error + '</p>');
+                }
+            });
+        });
+    } else if (response.status === 'not_authorized') {
+        FB.logout();
+        alert("{{ error_access }}");
+    } else {
+        FB.login(function(response) {
+            if (response.status === 'connected') {
+                FB.api('/me', { fields: 'name,id,email,first_name,last_name' }, function (response) {
+                    if(!response.email){
+                    var email = prompt("{{ insert_email }}", "{{ exemple_email }}");
                     } else {
-                        // we just have a button
-                        $('<p class="fbl_error">' + data.error + '</p>').insertAfter(button);
+                        email = response.email;
                     }
-                    // if we had any error remove user from app so we request again permissions
-                    FB.api(
-                        "/"+data.fb.id+"/permissions",
-                        "DELETE",
-                        function (response) {
-                            if (response && !response.error) {
+                    if(!response.first_name){
+                        var first_name = prompt("{{ insert_email }}", "");
+                    } else {
+                        first_name = response.first_name;
+                    }
+                    if(!response.last_name){
+                        var last_name = prompt("{{ insert_email }}", "");
+                    } else {
+                        last_name = response.last_name;
+                    }
+                    $.ajax({
+                        url: '{{ request }}',
+                        data: 'email=' + email + '&fname=' + first_name + '&lname=' + last_name + '&fb_id=' + response.id + '&login_via=facebook',
+                        type: 'get',
+                        success: function (json) {
+                            if (json['success']) {
+                                FB.logout();
+                                window.location.reload();
+                            } else if (json['error']) {
+                                for (i in json['error']) {
+                                    $('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>').insertBefore($('div.fb-login-error'));
+                                }
+                                FB.logout();
+                            } else {
+                                FB.logout();
+                                window.location.reload();
                             }
                         }
-                    );
-                }
-            },
-            error: function (data) {
-                $('.fbl-spinner').hide();
-                $('.fb-login-button').show();
-                $form_obj.append('<p class="fbl_error">' + data + '</p>');
+                    });
+                });
+            } else {
+                FB.logout();
             }
-        });
-
-    } else {
-        button.removeClass('fbl-loading');
-        if( navigator.userAgent.match('CriOS') )
-            window.open('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope='+fbl.scopes, '', null);
-
-        if( "standalone" in navigator && navigator.standalone )
-            window.location.assign('https://www.facebook.com/dialog/oauth?client_id=' + fbl.appId + '&redirect_uri=' + document.location.href + '&scope='+fbl.scopes);
+        }, {scope: 'public_profile,email'});
     }
+}
+function loginuseronfacebook() {
+    FB.getLoginStatus(function(response) {
+    if (response.status == 'connected') {
+        statusChangeCallback(response);
+    }});
+}
+window.fbAsyncInit = function() {
+    FB.init({
+    appId: '{{ app_id }}',
+    cookie: true,
+    xfbml: true,
+    version    : 'v6.0'
+    });
+    FB.AppEvents.logPageView();   
 };
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/{{ location_code }}/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 </script>
-<script type="text/javascript">
-    window.fbl_started = false;
-    function fbl_init(){
-        try{
-            window.FB.init({
-                appId      : '{{ app_id }}',
-                cookie     : true,
-                xfbml      : true,
-                status     : false,
-                autoLogAppEvents : true,
-                version    : 'v2.10'
-            });
-            window.FB.Event.subscribe('xfbml.render', function() {
-                FBL.renderFinish();
-            } );
-            window.fbl_started = true;
-        } catch (e){}
-    }
-    window.fbAsyncInit = function() {
-        if( ! window.fbl_started )
-            fbl_init()
-    };
-
-    var fbl_interval = window.setInterval(function(){
-        if(window.fbl_started)
-            clearInterval(fbl_interval);
-        if( !window.fbl_started)
-            fbl_init();
-    },100);
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/{{ locale }}/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
-{# Test area #}
-{# Connect button #}
-<div class="col-sx-12">
-    <div class="well">
-    <h2>{{ text_facebook }}</h2>
-    <p>{{ text_info_login }}</p>
-    <div class="form-group required" id='email_input_request' style="display: none;">
-        <label class="control-label" for="input-login-email">{{ entry_email }}</label>
-        <input type="email" name="email" value="" placeholder="{{ entry_email_txt }}" id="input-login-email" class="form-control" />
-    </div>
-    <div class="fb-login-button" data-max-rows="1" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="fbl_loginCheck" data-scope="email,public_profile"></div>
-    <p><small>{{ login_info_popup }}</small></p>
-    </div>
-</div>
-
-{# Disconnect button #}
-<a href="?fbl_disconnect&fb_nonce='. wp_create_nonce( 'fbl_disconnect' ) .'&redirect='.urlencode( $redirect ).'" class="css-fbl "><div>'. __('Disconnect Facebook', 'fbl') .'<img data-no-lazy="1" src="'.admin_url('images/loading.gif').'" alt="" style="display:none"/></div></a>
+<div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true" onlogin="loginuseronfacebook();" data-scope="email,public_profile"></div>
+<div class="fb-login-error"></div>
+{% endif %}

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Facebook Login 
+ * @author David <david_ev@icloud.com>
+ */
 class ControllerExtensionModuleFbLogin extends Controller {
 	private $error = array();
 
@@ -6,7 +10,7 @@ class ControllerExtensionModuleFbLogin extends Controller {
 		
 		$data = array();
 		
-		$data['version'] = '2.0';
+		$data['version'] = '2.1';
 
 		$this->load->language('extension/module/fb_login');
 
@@ -15,7 +19,7 @@ class ControllerExtensionModuleFbLogin extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('module_fblogin', $this->request->post);
+			$this->model_setting_setting->editSetting('module_fb_login', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -32,6 +36,12 @@ class ControllerExtensionModuleFbLogin extends Controller {
 			$data['error_app_id'] = $this->error['app_id'];
 		} else {
 			$data['error_app_id'] = '';
+		}
+		
+		if (isset($this->error['app_secret'])) {
+			$data['error_app_secret'] = $this->error['app_secret'];
+		} else {
+			$data['error_app_secret'] = '';
         }
         
         if (isset($this->error['loc'])) {
@@ -61,22 +71,22 @@ class ControllerExtensionModuleFbLogin extends Controller {
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
-		if (isset($this->request->post['module_fblogin_status'])) {
-			$data['module_fblogin_status'] = $this->request->post['module_fblogin_status'];
+		if (isset($this->request->post['module_fb_login_status'])) {
+			$data['module_fb_login_status'] = $this->request->post['module_fb_login_status'];
 		} else {
-			$data['module_fblogin_status'] = $this->config->get('module_fblogin_status');
+			$data['module_fb_login_status'] = $this->config->get('module_fb_login_status');
         }
 
-        if (isset($this->request->post['module_fblogin_app_id'])) {
-			$data['module_fblogin_app_id'] = $this->request->post['module_fblogin_app_id'];
+        if (isset($this->request->post['module_fb_login_app_id'])) {
+			$data['module_fb_login_app_id'] = $this->request->post['module_fb_login_app_id'];
 		} else {
-			$data['module_fblogin_app_id'] = $this->config->get('module_fblogin_app_id');
-        }
+			$data['module_fb_login_app_id'] = $this->config->get('module_fb_login_app_id');
+		}
 
-        if (isset($this->request->post['module_fblogin_app_loc'])) {
-			$data['module_fblogin_app_loc'] = $this->request->post['module_fblogin_app_loc'];
+        if (isset($this->request->post['module_fb_login_app_loc'])) {
+			$data['module_fb_login_app_loc'] = $this->request->post['module_fb_login_app_loc'];
 		} else {
-			$data['module_fblogin_app_loc'] = $this->config->get('module_fblogin_app_loc');
+			$data['module_fb_login_app_loc'] = $this->config->get('module_fb_login_app_loc');
         }
 
 		$data['header'] = $this->load->controller('common/header');
@@ -91,14 +101,19 @@ class ControllerExtensionModuleFbLogin extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
         }
         
-        if (!$this->request->post['module_fblogin_app_id']) {
+        if (!$this->request->post['module_fb_login_app_id']) {
 			$this->error['app_id'] = $this->language->get('error_app_id');
+		}
+		
+		if (!$this->request->post['module_fb_login_app_secret']) {
+			$this->error['app_secret'] = $this->language->get('error_app_secret');
         }
         
-        if (!$this->request->post['module_fblogin_app_loc']) {
+        if (!$this->request->post['module_fb_login_app_loc']) {
 			$this->error['loc'] = $this->language->get('error_loc');
 		}
 
 		return !$this->error;
 	}
+
 }

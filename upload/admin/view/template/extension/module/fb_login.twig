@@ -24,6 +24,11 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
+    {% if error_app_secret %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_app_secret }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
     {% if error_loc %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_loc }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -38,20 +43,20 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-app-id">{{ entry_app_id }}</label>
                 <div class="col-sm-10">
-                <input type="number" name="module_fblogin_app_id" value="{{ module_fblogin_app_id }}" placeholder="{{ entry_app_id }}" id="input-app-id" class="form-control" />
+                <input type="number" name="module_fb_login_app_id" value="{{ module_fb_login_app_id }}" placeholder="{{ entry_app_id }}" id="input-app-id" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-app-loc">{{ entry_app_loc }}</label>
                 <div class="col-sm-10">
-                <input type="text" name="module_fblogin_app_loc" value="{{ module_fblogin_app_loc }}" placeholder="{{ entry_app_loc }}" id="input-app-loc" class="form-control" />
+                <input type="text" name="module_fb_login_app_loc" value="{{ module_fb_login_app_loc }}" placeholder="{{ entry_app_loc }}" id="input-app-loc" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                <select name="module_fblogin_status" id="input-status" class="form-control">
-                    {% if module_fblogin_status %}
+                <select name="module_fb_login_status" id="input-status" class="form-control">
+                    {% if module_fb_login_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
