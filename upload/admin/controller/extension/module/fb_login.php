@@ -1,7 +1,6 @@
 <?php
 /**
  * Facebook Login 
- * @version 41
  * @author David <david_ev@icloud.com>
  */
 class ControllerExtensionModuleFbLogin extends Controller {
@@ -11,7 +10,7 @@ class ControllerExtensionModuleFbLogin extends Controller {
 		
 		$data = array();
 		
-		$data['version'] = '2.0';
+		$data['version'] = '2.1';
 
 		$this->load->language('extension/module/fb_login');
 
@@ -83,12 +82,6 @@ class ControllerExtensionModuleFbLogin extends Controller {
 		} else {
 			$data['module_fb_login_app_id'] = $this->config->get('module_fb_login_app_id');
 		}
-		
-		if (isset($this->request->post['module_fb_login_app_secret'])) {
-			$data['module_fb_login_app_secret'] = $this->request->post['module_fb_login_app_secret'];
-		} else {
-			$data['module_fb_login_app_secret'] = $this->config->get('module_fb_login_app_secret');
-        }
 
         if (isset($this->request->post['module_fb_login_app_loc'])) {
 			$data['module_fb_login_app_loc'] = $this->request->post['module_fb_login_app_loc'];

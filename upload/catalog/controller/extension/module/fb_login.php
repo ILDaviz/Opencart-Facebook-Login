@@ -1,13 +1,18 @@
 <?php
+/**
+ * Facebook Login 
+ * @author David <david_ev@icloud.com>
+ */
 class ControllerExtensionModuleFbLogin extends Controller {
 
     public function index(){
         $data = array();
         $this->load->language('extension/module/fb_login');
         $data['request'] =  $this->url->link('extension/module/fb_login/fblogin', '', true);
-        $data['status_fb_login'] = $this->config->get('fb_login_status');
-        $data['app_id'] = $this->config->get('fb_login_app_id');
-        $data['location_code'] = $this->config->get('fb_login_app_loc');
+        $data['status_fb_login'] = $this->config->get('module_fb_login_status');
+        $data['app_id'] = $this->config->get('module_fb_login_app_id');
+        $data['location_code'] = $this->config->get('module_fb_login_app_loc');
+
         return $this->load->view('extension/module/fb_login', $data);
     }
 
@@ -21,27 +26,33 @@ class ControllerExtensionModuleFbLogin extends Controller {
         $data = array();
 
         if (!isset($this->request->get['email'])) {
-			$json['error'][] = $this->language->get('error_email_not_present');
+            $json['error'][] = $this->language->get('error_access');
+            $this->log->write('Error login whit facebook missing email');
         }
 
         if ($this->request->get['email'] == 'undefined') {
-			$json['error'][] = $this->language->get('error_email_noset');
+            $json['error'][] = $this->language->get('error_access');
+            $this->log->write('Error login whit facebook undefined email');
         }
 
         if (!filter_var($this->request->get['email'], FILTER_VALIDATE_EMAIL)) {
-			$json['error'][] = $this->language->get('error_email');
+            $json['error'][] = $this->language->get('error_access');
+            $this->log->write('Error login facebook email not valid');
         }
 
         if (!isset($this->request->get['fname'])) {
-			$json['error'][] = $this->language->get('error_fname');
+            $json['error'][] = $this->language->get('error_access');
+            $this->log->write('Error login whit facebook missing firstname');
         }
         
         if (!isset($this->request->get['lname'])) {
-			$json['error'][] = $this->language->get('error_lname');
+            $json['error'][] = $this->language->get('error_access');
+            $this->log->write('Error login whit facebook missing lastname');
         }
         
         if (!isset($this->request->get['fb_id'])) {
-			$json['error'][] = $this->language->get('error_fb_id');
+            $json['error'][] = $this->language->get('error_access');
+            $this->log->write('Error login whit facebook missing facebook id');
 		}
 
         if (!$json) {
@@ -76,7 +87,6 @@ class ControllerExtensionModuleFbLogin extends Controller {
                 $data['lastname'] = $this->request->get['lname'];
                 $data['telephone'] = '';
                 $data['fax'] = '';
-                $data['password'] = '';
                 $data['company'] = '';
                 $data['address_1'] = '';
                 $data['address_2'] = '';
