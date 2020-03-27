@@ -104,10 +104,6 @@ class ControllerExtensionModuleFbLogin extends Controller {
         if (!$this->request->post['module_fb_login_app_id']) {
 			$this->error['app_id'] = $this->language->get('error_app_id');
 		}
-		
-		if (!$this->request->post['module_fb_login_app_secret']) {
-			$this->error['app_secret'] = $this->language->get('error_app_secret');
-        }
         
         if (!$this->request->post['module_fb_login_app_loc']) {
 			$this->error['loc'] = $this->language->get('error_loc');
