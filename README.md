@@ -1,4 +1,4 @@
-Opencart Facebook Login 3.x
+🛒 Opencart Facebook Login 3.x 🐱‍🏍
 =======
 
 Description:
@@ -6,13 +6,13 @@ Let your customers login and checkout using Facebook account. This module uses y
 
 ---
 Function:
-- Login or Register user's from Facebook.
-- The login it's present on login and checkout page.
-- Use the Layout page for add this login button to another part of the site
-- Add event if users login
+- 📖 Login or Register user's from Facebook.
+- 📖 The login it's present on login and checkout page.
+- 📖 Use the Layout page for add this login button to another part of the site
+- 📖 Add event if users login
 
 ---
-Installation
+Installation 📑
 1. Login to your website OpenCart admin panel
 2. Go to Extensions > Extension installer and upload ocmod package
 3. Go to Extensions > Extensions > Module and active Facebook Login and insert request info and enable this module.
