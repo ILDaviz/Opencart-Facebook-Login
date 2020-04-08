@@ -8,8 +8,8 @@ class ControllerExtensionModuleFbLogin extends Controller {
     public function index(){
         $data = array();
         $this->load->language('extension/module/fb_login');
-        $data['request'] =  $this->url->link('extension/module/fb_login/fblogin', '', true);
         $data['status_fb_login'] = $this->config->get('module_fb_login_status');
+        $data['request'] =  $this->url->link('extension/module/fb_login/fblogin', '', true);
         $data['app_id'] = $this->config->get('module_fb_login_app_id');
         $data['location_code'] = $this->config->get('module_fb_login_app_loc');
 
