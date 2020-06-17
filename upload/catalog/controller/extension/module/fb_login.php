@@ -16,16 +16,17 @@ class ControllerExtensionModuleFbLogin extends Controller
         // Verifico presenza dei dati base
         if (isset($setting['app_id']) &&
             isset($setting['loc']) &&
-            isset($setting['type_attach'])
+            isset($setting['type_attach']) &&
+            ($this->customer->isLogged() == false)
         ) {
+            $this->load->language('extension/module/fb_login');
             $data = array();
-
             $data['app_id'] = $setting['app_id'];
             $data['loc'] = $setting['loc'];
             $data['type_attach'] = $setting['type_attach'];
             $data['status'] = $setting['status'];
-            $data['request'] =  $this->url->link('extension/module/fb_login/fblogin', '', true);
-
+            $data['request'] =  $this->url->link('extension/module/fb_login/ApiRestFacebookLogin', '', true);
+            $data['ref'] = token(4);
             return $this->load->view('extension/module/fb_login', $data);
 
         }
@@ -34,7 +35,7 @@ class ControllerExtensionModuleFbLogin extends Controller
     /**
      * ApiRest per la connessione via metodo facebook
      */
-    public function fblogin(){
+    public function ApiRestFacebookLogin(){
 
         $this->load->language('extension/module/fb_login');
         $this->load->model('account/customer');

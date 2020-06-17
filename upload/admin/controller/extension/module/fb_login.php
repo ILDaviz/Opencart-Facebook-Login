@@ -144,7 +144,7 @@ class ControllerExtensionModuleFbLogin extends Controller
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if (!isset($this->request->post['app_id']) || strlen($this->request->post['app_id'])){
+        if (!isset($this->request->post['app_id']) || strlen($this->request->post['app_id']) < 16 ){
             $this->error['app_id'] = $this->language->get('error_app_id');
         }
 

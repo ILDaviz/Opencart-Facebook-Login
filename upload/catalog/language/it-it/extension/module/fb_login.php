@@ -6,3 +6,5 @@ $_['insert_email'] = 'Inserisci qui l\'email';
 $_['exemple_email'] = 'esempio@esempio.com';
 $_['insert_fname'] = 'Inserisci il tuo nome';
 $_['insert_lname'] = 'Inserisci il tuo cognome';
+$_['title_access_facebook'] = 'Accedi con Facebook';
+$_['loading_facebook'] = 'Facebook login in caricamento...';
