@@ -11,3 +11,4 @@ $_['entry_type_attach'] = 'Layout or specific id';
 $_['text_extension'] = 'Module';
 $_['text_id'] = 'Id class';
 $_['text_layout'] = 'Layout of Opencart';
+$_['text_success'] = 'Success: You have modified login Facebook!';

@@ -20,16 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88256d3b-8ec3-4f2d-92fa-bb7e86199970" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/admin/controller/extension/module/fb_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/upload/admin/controller/extension/module/fb_login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fb_login.ocmod.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/upload/admin/language/en-gb/extension/module/fb_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/upload/admin/language/en-gb/extension/module/fb_login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/upload/admin/language/it-it/extension/module/fb_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/upload/admin/language/it-it/extension/module/fb_login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/upload/admin/view/template/extension/module/fb_login.twig" beforeDir="false" afterPath="$PROJECT_DIR$/upload/admin/view/template/extension/module/fb_login.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/catalog/controller/extension/module/fb_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/upload/catalog/controller/extension/module/fb_login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/catalog/language/en-gb/extension/module/fb_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/upload/catalog/language/en-gb/extension/module/fb_login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/catalog/language/it-it/extension/module/fb_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/upload/catalog/language/it-it/extension/module/fb_login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/catalog/view/theme/default/template/extension/module/fb_login.twig" beforeDir="false" afterPath="$PROJECT_DIR$/upload/catalog/view/theme/default/template/extension/module/fb_login.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +66,7 @@
       <option name="presentableId" value="Default" />
       <updated>1592396826447</updated>
       <workItem from="1592396828396" duration="10000" />
-      <workItem from="1592397274007" duration="7613000" />
+      <workItem from="1592397274007" duration="8299000" />
     </task>
     <servers />
   </component>

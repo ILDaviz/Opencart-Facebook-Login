@@ -55,9 +55,9 @@
                             <select name="type_attach" id="input-type-attach" class="form-control">
                                 {% if type_attach %}
                                     <option value="1" selected="selected">{{ text_id }}</option>
-                                    <option value="0">{{ text_disabled }}</option>
+                                    <option value="0">{{ text_layout }}</option>
                                 {% else %}
-                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="1">{{ text_id }}</option>
                                     <option value="0" selected="selected">{{ text_layout }}</option>
                                 {% endif %}
                             </select>

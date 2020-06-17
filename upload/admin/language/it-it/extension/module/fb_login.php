@@ -11,3 +11,4 @@ $_['entry_type_attach'] = 'Via layout o via id';
 $_['text_extension'] = 'Moduli';
 $_['text_id'] = 'Con riferimento Id';
 $_['text_layout'] = 'Con Layout di Opencart';
+$_['text_success'] = 'Modulo login facebook aggiornato con successo';
