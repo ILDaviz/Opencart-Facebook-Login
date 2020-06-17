@@ -1,24 +1,2 @@
-.htaccess
 .DS_Store
 .idea/**
-/config.php
-admin/config.php
-
-!index.html
-
-download/
-image/data/
-image/cache/
-system/cache/
-system/logs/
-
-system/storage/
-devfolder
-
-# vQmod log files
-vqmod/logs/*
-# vQmod cache files
-vqmod/vqcache/*
-vqmod/checked.cache
-vqmod/mods.cache
-fblogin.ocmod.zip
