@@ -1,27 +1,45 @@
 <?php
 /**
- * Facebook Login 
+ * Facebook Login FrontEnd
  * @author David <david_ev@icloud.com>
  */
-class ControllerExtensionModuleFbLogin extends Controller {
 
-    public function index(){
-        $data = array();
-        $this->load->language('extension/module/fb_login');
-        $data['status_fb_login'] = $this->config->get('module_fb_login_status');
-        $data['request'] =  $this->url->link('extension/module/fb_login/fblogin', '', true);
-        $data['app_id'] = $this->config->get('module_fb_login_app_id');
-        $data['location_code'] = $this->config->get('module_fb_login_app_loc');
+class ControllerExtensionModuleFbLogin extends Controller
+{
+    /**
+     * Chiama un determinato componente chiamato dal gestore layout
+     * @param $setting
+     * @return mixed
+     */
+    public function index($setting)
+    {
+        // Verifico presenza dei dati base
+        if (isset($setting['app_id']) &&
+            isset($setting['loc']) &&
+            isset($setting['type_attach'])
+        ) {
+            $data = array();
 
-        return $this->load->view('extension/module/fb_login', $data);
+            $data['app_id'] = $setting['app_id'];
+            $data['loc'] = $setting['loc'];
+            $data['type_attach'] = $setting['type_attach'];
+            $data['status'] = $setting['status'];
+            $data['request'] =  $this->url->link('extension/module/fb_login/fblogin', '', true);
+
+            return $this->load->view('extension/module/fb_login', $data);
+
+        }
     }
 
+    /**
+     * ApiRest per la connessione via metodo facebook
+     */
     public function fblogin(){
 
         $this->load->language('extension/module/fb_login');
         $this->load->model('account/customer');
         $this->load->model('account/activity');
-        
+
         $json = array();
         $data = array();
 
@@ -44,16 +62,16 @@ class ControllerExtensionModuleFbLogin extends Controller {
             $json['error'][] = $this->language->get('error_access');
             $this->log->write('Error login whit facebook missing firstname');
         }
-        
+
         if (!isset($this->request->get['lname'])) {
             $json['error'][] = $this->language->get('error_access');
             $this->log->write('Error login whit facebook missing lastname');
         }
-        
+
         if (!isset($this->request->get['fb_id'])) {
             $json['error'][] = $this->language->get('error_access');
             $this->log->write('Error login whit facebook missing facebook id');
-		}
+        }
 
         if (!$json) {
 
@@ -64,11 +82,11 @@ class ControllerExtensionModuleFbLogin extends Controller {
                     $this->load->model('account/address');
 
                     if ($this->config->get('config_tax_customer') == 'payment') {
-                            $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+                        $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
                     }
 
                     if ($this->config->get('config_tax_customer') == 'shipping') {
-                            $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+                        $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
                     }
                 }
                 if ($this->customer->isLogged()) {
@@ -95,7 +113,7 @@ class ControllerExtensionModuleFbLogin extends Controller {
                 $data['country_id'] = '';
                 $data['zone_id'] = '';
                 $data['password'] = $this->request->get['fb_id'];
-                
+
                 $customer_id = $this->model_account_customer->addCustomer($data);
 
                 if ($customer_id && $this->customer->login($data['email'], '', true)) {
@@ -103,11 +121,11 @@ class ControllerExtensionModuleFbLogin extends Controller {
                     $this->load->model('account/address');
 
                     if ($this->config->get('config_tax_customer') == 'payment') {
-                            $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+                        $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
                     }
 
                     if ($this->config->get('config_tax_customer') == 'shipping') {
-                            $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+                        $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
                     }
                 }
 
@@ -121,6 +139,6 @@ class ControllerExtensionModuleFbLogin extends Controller {
         }
 
         $this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+        $this->response->setOutput(json_encode($json));
     }
 }
