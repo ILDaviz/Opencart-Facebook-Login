@@ -1,6 +1,9 @@
 🛒 Opencart Facebook Login 3.x 🐱‍🏍
 =======
 
+[![Minimum Opencart Version](https://img.shields.io/badge/Opencart-%3E%3D%203.X-green)](https://www.opencart.com/index.php?route=common/home)
+[![Minimum Opencart Version](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee%2C%20Thanks!!-orange)](https://www.buymeacoffee.com/davidev)
+
 Description:
 Let your customers login and checkout using Facebook account. This module uses your own created Facebook API js for your own website. In case, you don't have website API for Facebook yet, then below you can find instructions how to register your own API.
 
@@ -22,5 +25,3 @@ To create and connect Facebook login with your API follow these simple steps:
 3. Go to your OpenCart shop admin area > Extension > Modules > Facebook Login.
 4. Install and configure your Facebook module insert Facebook App ID Location.
 5. Connect your facebook login button with the layout.
-
-<a href="https://www.buymeacoffee.com/davidev" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-violet.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 117px !important;" ></a>
